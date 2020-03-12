@@ -6,24 +6,28 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
     <body>
+      <div>
+      <input type="checkbox" class="checkit" name="mood" id="mood" value="1" onclick="changeMood('mood', 'labelMood', 'svg');"/>
+      <label for="mood" name="labelMood" id="labelMood">Happy</label>
+      </div>
         <svg width="500" height="300">
             <g>
                <circle cx="250" cy="150" r="150" fill="yellow">
                 </circle>
-                <ellipse cx="300" cy="100" rx="25" ry="50" 
+                <ellipse cx="300" cy="100" rx="25" ry="50"
                     fill="black"></ellipse>
-                <path stroke="black" fill="none"
+                <path id="svg" stroke="black" fill="none"
                     d="M 150 200 Q 225 300 300 200">
                 </path>
                 <ellipse class="left-eye" cx="175" cy="110" rx="25" ry="50"
                     fill="black">
                 </ellipse>
                 <rect x="150" y="100" width="50" height="25"
-                    fill="black"></rect> 
+                    fill="black"></rect>
             </g>
         </svg>
         <script type="text/javascript" src="js/index.js">
-      
+
         </script>
     </body>
 </html>
