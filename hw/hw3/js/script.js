@@ -32,7 +32,6 @@ const simulation = d3.forceSimulation()
 
 d3.csv('data/netflix.csv').then(data=>{
     data = d3.nest().key(d=>d.title).rollup(d=>d[0]).entries(data).map(d=>d.value).filter(d=>d['user rating score']!=='NA');
-    console.log(data)
 
     const rating = data.map(d=>+d['user rating score']);
     const years = data.map(d=>+d['release year']);
