@@ -162,6 +162,10 @@
                         .attr('fill', '#add8e6')
 
                     // TODO Part 3: update legend axis based on param
+                    let extend_p = d3.extent(data.map(d=>+d[param][year]));
+                    let params = d3.scaleLinear().range([0, 200]).domain(extend_p);
+                    var axis_Y = d3.axisBottom(params).ticks(3);
+                    axis.call(axis_Y);
                 }
                 // call update() for the first time
                 update();
