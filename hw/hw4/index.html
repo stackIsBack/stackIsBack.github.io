@@ -101,8 +101,7 @@
                 d3.select('g.parameter-value path').attr('d', `M 0,0 V ${sliderHeight} H -${x.bandwidth()} V 0 Z`);
 
                 // TODO Part 1: here you can create a projection d3.geoEquirectangular() and a geopath generator
-                const projection = d3.geoEquirectangular()
-                  .translate([width / 2, height / 2]);
+                const projection = d3.geoEquirectangular();
 
                 const path = d3.geoPath().projection(projection);
 
