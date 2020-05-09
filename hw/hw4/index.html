@@ -102,8 +102,7 @@
 
                 // TODO Part 1: here you can create a projection d3.geoEquirectangular() and a geopath generator
                 const projection = d3.geoEquirectangular()
-                  .translate([width / 2, height / 2])
-                  .scale(300);
+                  .translate([width / 2, height / 2]);
 
                 const path = d3.geoPath().projection(projection);
 
