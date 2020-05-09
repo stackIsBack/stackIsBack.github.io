@@ -96,7 +96,7 @@
                 d3.select('g.parameter-value path').attr('d', `M 0,0 V ${sliderHeight} H -${x.bandwidth()} V 0 Z`);
 
                 // TODO Part 1: here you can create a projection d3.geoEquirectangular() and a geopath generator
-                const projection = d3.geoEquirectangular().scale(300);
+                const projection = d3.geoEquirectangular().fitSize([width, height], world);;
                 const path = d3.geoPath().projection(projection);
 
                 // TODO Part 1: here you can create a map
@@ -128,10 +128,18 @@
 
                     // change country's colors
                     map.attr('fill', feature =>{
-                        // findin' a countrys data item
-                        let country = data.find(d=>d.geo === feature.id.toLowerCase());
-                        // TODO Part 1: fill country's path based on chosen param
-                        return country?color(country[param][year]):noColor;
+                            // findin' a countrys data item
+                             let country = data.find(d=>d.geo === feature.id.toLowerCase());
+
+                             // TODO Part 1: fill country's path based on chosen param
+                             if (typeof country === 'undefined') {
+                               c = noColor;
+                             } else {
+                               c = color(country[param][year]);
+                             }
+
+                             return (c);
+
                     });
 
                     // make an array for barchart
