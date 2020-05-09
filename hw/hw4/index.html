@@ -153,27 +153,6 @@
                     // make an array for barchart
                     let array = years.map(y=>d3.sum(data.map(d=>+d[param][y])));
                     // TODO Part 2: update y scale domain
-                    y.domain([d3.min(array), d3.max(array)]);
-
-                    // TODO Part 2: create and update barchart
-                    const barchart = chart.selectAll('rect').data(array)
-                    barchart.enter()
-                        .append('rect')
-                        .merge(barchart)
-                        .transition()
-                        .duration(700)
-                        .attr('x', function(d,i) { return x(years[i]); })
-                        .attr('y', function(d) { return y(d); })
-                        .attr('width', (width / array.length) * 0.85)
-                        .attr('height', (d) => sliderHeight - y(d))
-                        .attr('fill', '#add8e6')
-
-                    // TODO Part 3: update legend axis based on param
-
-                    let extend_p = d3.extent(data.map(d=>+d[param][year]));
-                    let params = d3.scaleLinear().range([0, 200]).domain(extend_p);
-                    var axis_Y = d3.axisBottom(params).ticks(3);
-                    axis.call(axis_Y);
                 }
                 // call update() for the first time
                 update();
