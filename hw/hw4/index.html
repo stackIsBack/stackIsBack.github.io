@@ -4,7 +4,7 @@
         <title>HW 4</title>
         <script src="https://d3js.org/d3.v5.min.js"></script>
         <script src="https://unpkg.com/d3-simple-slider"></script>
-        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
         <div id="year"></div>
@@ -36,34 +36,29 @@
 
                 // TODO Part 1: here you can create a linear scale based on colors
                 const color = d3.scaleLinear().range(colors);
-                //color.domain([1,1000]);
-
-                //const color = d3.scaleOrdinal(d3.schemeCategory10);
-
-                //const color = d3.scaleOrdinal().range(colors);
 
                 // years array
                 const years = Object.keys(data[0][param]).map(d=>+d).filter(d=>d);
 
                 // TODO Part 2: here you can create х & y scales
-                // ...
                 const x = d3.scaleBand(years, [0, width]).padding(.1);
-                y = d3.scaleLinear().range([sliderHeight, 0]);
+                const y = d3.scaleLinear().range([sliderHeight, 0]);
 
                 // TODO Part 3: here you can create an svg inside #menu and add a legend
-                // ...
                 const legend = d3.select('#menu').append('svg')
-                     .attr('width', 200).attr("height", 40)
+                    .attr('width', 200).attr("height", 40)
                 let gradient = legend.append('defs')
-                     .append("svg:linearGradient")
-                         .attr("id", "gradient");
+                    .append("svg:linearGradient")
+                    .attr("id", "gradient");
 
-                gradient.append('stop').attr('offset', '0%').style("stop-color", colors[0]);
-                gradient.append('stop').attr('offset', '100%').style("stop-color", colors[1]);
+                gradient.append('stop').attr('offset', '0%')
+                    .style("stop-color", colors[0]);
+                gradient.append('stop').attr('offset', '100%')
+                    .style("stop-color", colors[1]);
 
                 legend.append('rect')
-                     .attr('width', 200).attr("height", 20)
-                     .style("fill", "url(#gradient)");
+                    .attr('width', 200).attr("height", 20)
+                    .style("fill", "url(#gradient)");
 
                 const axis = legend.append('g').attr('id','axis').attr('transform', 'translate(0,20)');
 
@@ -102,31 +97,19 @@
 
                 // TODO Part 1: here you can create a projection d3.geoEquirectangular() and a geopath generator
                 const projection = d3.geoEquirectangular();
-
                 const path = d3.geoPath().projection(projection);
 
                 // TODO Part 1: here you can create a map
-
                 const map = svg.append('g').selectAll("path")
-                  .data(world.features)
-                  .enter()
-                  .append("path")
-                  .attr("d", path)
-                  .attr("fill", noColor)
-                  .on("mouseout", noMouse)
-                  .on("mouseover", onMouse);
+                    .data(world.features)
+                    .enter()
+                    .append("path")
+                    .attr("d", path);
 
                 // TODO Part 1: add a mouse event listener to display country name inside #country
-                function noMouse() {
-                  d3.select("#country").text("");
-                }
-
-                function onMouse(d) {
-                  d3.select("#country").text(d.properties.name);
-                }
+                map.on('mouseover', d => d3.select('#country').text(d.properties.name));
 
                 // this function'll update both charts when any parameter changes
-
                 function update(){
                     // update a year
                     d3.select('#year').text(year);
@@ -136,23 +119,21 @@
 
                     // change country's colors
                     map.attr('fill', feature =>{
-                            // findin' a countrys data item
-                             let country = data.find(d=>d.geo === feature.id.toLowerCase());
-
-                             // TODO Part 1: fill country's path based on chosen param
-                             if (typeof country === 'undefined') {
-                               c = noColor;
-                             } else {
-                               c = color(country[param][year]);
-                             }
-
-                             return (c);
-
-                         });
+                        // findin' a countrys data item
+                        let country = data.find(d=>d.geo === feature.id.toLowerCase());
+                        // TODO Part 1: fill country's path based on chosen param
+                        return country?color(country[param][year]):noColor;
+                    });
 
                     // make an array for barchart
                     let array = years.map(y=>d3.sum(data.map(d=>+d[param][y])));
+
                     // TODO Part 2: update y scale domain
+
+                    // TODO Part 2: create and update barchart
+
+
+                    // TODO Part 3: update legend axis based on param
                 }
                 // call update() for the first time
                 update();
