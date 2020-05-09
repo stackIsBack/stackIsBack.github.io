@@ -101,13 +101,22 @@
 
                 // TODO Part 1: here you can create a map
                 const map = svg.append('g').selectAll("path")
-                    .data(world.features)
-                    .enter()
-                    .append("path")
-                    .attr("d", path);
+                  .data(world.features)
+                  .enter()
+                  .append("path")
+                  .attr("d", path)
+                  .attr("fill", noColor)
+                  .on("mouseout", noMouse)
+                  .on("mouseover", onMouse);
 
                 // TODO Part 1: add a mouse event listener to display country name inside #country
-                map.on('mouseover', d => d3.select('#country').text(d.properties.name));
+                function noMouse() {
+                  d3.select("#country").text("");
+                }
+
+                function onMouse(d) {
+                  d3.select("#country").text(d.properties.name);
+                }
 
                 // this function'll update both charts when any parameter changes
                 function update(){
